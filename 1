@@ -1,0 +1,67 @@
+import random, time
+f = open('time.txt', 'w')
+
+def gen(size):
+    x = []
+
+    for i in range(size):
+        x.append(random.randint(0, 20))
+
+    return x
+
+def bubble(x):
+    for i in range(len(x)-1):
+        for j in range(len(x) - i - 1):
+            if x[j] > x[j + 1]:
+                x[j], x[j + 1] = x[j + 1], x[j]
+
+    return x
+
+def sort(x):
+    n = len(x)
+    for i in range(n - 1):
+        m = i
+        for j in range(i + 1, n):
+            if x[j] < x[m]:
+                m = j
+        x[i], x[m] = x[m], x[i]
+
+    return x
+
+def quickSort(x):
+    if len(x) <= 1:
+        return x
+    else:
+        q = random.choice(x)
+        L = []
+        M = []
+        R = []
+        for element in x:
+            if element < q:
+                L.append(element)
+            elif element > q:
+                R.append(element)
+            else:
+                M.append(element)
+
+        return quickSort(L) + M + quickSort(R)
+
+size = int(input('Введите размер: '))
+x = gen(size)
+
+startFirst = time.time()
+x2 = bubble(x)
+endFirst = time.time() - startFirst
+f.write(str(endFirst) + '\n')
+
+startSecond = time.time()
+x3 = sort(x)
+endSecond = time.time() - startSecond
+f.write(str(endSecond) + '\n')
+
+startThird = time.time()
+x4 = quickSort(x)
+endThird = time.time() - startThird
+f.write(str(endThird) + '\n')
+
+f.close()
